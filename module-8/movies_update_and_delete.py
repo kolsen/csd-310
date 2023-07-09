@@ -98,18 +98,18 @@ def insert_film(cursor, filmName, releaseDate, runtime, director, studioName, ge
         print(f"Error inserting film: {error}")
 
 def delete_film(cursor, filmName):
-    try:
-        # Build the SQL query to delete a film from the film table
-        sql = "DELETE FROM film WHERE film_name = %s"
-        
-        # Execute the delete query
-        cursor.execute(sql, (filmName,))
+    #try:
+    # Build the SQL query to delete a film from the film table
+    sql = "DELETE FROM film WHERE film_name = %s"
+    
+    # Execute the delete query
+    cursor.execute(sql, (filmName,))
 
-        # Commit the changes to the database
-        db.commit()
+    # Commit the changes to the database
+    db.commit()
 
-    except mysql.connector.Error as error:
-        print(f"Error deleting film: {error}")
+    #except mysql.connector.Error as error:
+     #   print(f"Error deleting film: {error}")
 
 def update_genre(cursor, filmTitle, genreName):
     # method to update film based on the title and genre name provided
@@ -155,3 +155,5 @@ update_genre(cursor,"Alien","Horror")
 show_films(cursor,"Displaying Films After Update - Changed Alien to Horror")
 delete_film(cursor,"Gladiator")
 show_films(cursor,"Displaying Films After Delete")
+
+db.close()
