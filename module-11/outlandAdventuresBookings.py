@@ -2,10 +2,13 @@
 Description: Connects to the Outland_Adventure db and runs report on Current Bookings.
 Created by: Keith Olsen, Nathan Le, Ivan Lopez-Kne
 Created on: 07/14/2023
+Updated By: Keith Olsen 07/22/2023
+Update: Updated report to be more readable removed ids from report since they were not needed.
 '''
 
 
 import mysql.connector
+from mysql.connector import errorcode
 
 # Configure connection to DB
 db_config = {
@@ -35,16 +38,16 @@ def display_report(rows):
     # Display Report title
     print("--- Current bookings for Outland Adventures ---")
     #Display Header
-    print("Trip ID | Customer ID | Vaccine Needed | Location Name | Flight Number | Arrival Date | Departure Date | Airfare Cost")
-    print("-" * 110)
+    print("{:<14} | {:<13} | {:<13} | {:<12} | {:<13} | {:<13}".format("Vaccine Needed", "Location Name", "Flight Number","Arrival Date","Departure Date","Airfare Cost"))
+    print("-" * 94)
 
     for row in rows:
-        trip_id, customer_id, vaccine_name, location_name, flight_number, arrival_date, departure_date, airfare_cost = row
-        print(f"{trip_id:7} | {customer_id:11} | {vaccine_name:9} | {location_name:13} | {flight_number:13} | {arrival_date} | {departure_date} | {airfare_cost}")
+        vaccine_name, location_name, flight_number, arrival_date, departure_date, airfare_cost = row
+        print(f"{vaccine_name:14} | {location_name:13} | {flight_number:13} |  {arrival_date}  |   {departure_date}   | {airfare_cost}")
 
 if __name__ == "__main__":
     query = """
-    SELECT t.trip_ID, t.customer_ID, i.vaccine_name, l.location_name, a.flight_number, a.arrival_date, a.departure_date, a.airfare_cost
+    SELECT i.vaccine_name, l.location_name, a.flight_number, a.arrival_date, a.departure_date, a.airfare_cost
     FROM trip t
     JOIN location l ON t.location_ID = l.location_ID
     JOIN airfare a ON t.trip_ID = a.trip_ID

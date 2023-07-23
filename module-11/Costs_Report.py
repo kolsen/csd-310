@@ -1,3 +1,11 @@
+'''
+Description: Connects to the Outland_Adventure db and runs report on costs.
+Created by: Keith Olsen, Nathan Le, Ivan Lopez-Kne
+Created on: 07/14/2023
+Updated By: Keith Olsen 07/22/2023
+Update: Updated report to be more readable
+'''
+
 import mysql.connector
 from mysql.connector import errorcode
 
@@ -31,12 +39,12 @@ def display_report(rows):
     # Display Report title
     print("--- Total Costs for Outland Adventures ---")
     # Display Header
-    print("Trip ID | Airfare Costs | Visa Fees")
-    print("-" * 110)
+    print("{:<8} | {:<14} | {:<9}".format("Trip ID", "Airfare Costs", "Visa Fees"))
+    print("-" * 40)
 
     for row in rows:
         trip_ID, airfare_cost, visa_fees = row
-        print(f"{trip_ID} | {airfare_cost} | {visa_fees}")
+        print(f"{trip_ID:8} | {airfare_cost:14} | {visa_fees}")
 
 if __name__ == "__main__":
     query = """
